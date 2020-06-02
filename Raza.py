@@ -66,8 +66,8 @@ while i <= len(punkti) + 1:
             next(reader)
             for row in reader:
                 if int(row[0]) == key:
-                    raza = float(row[5])
-                    pH = float(row[4])
+                    raza = float(row[2])
+                    pH = float(row[1])
                     punkti[key][7][0] = raza
                     value2 = raza
                     value2 = (value2 / 6) * 100
@@ -232,7 +232,7 @@ r = csv.reader(open('hello.csv'))
 lines = list(r)
 i = 1
 for key in punkti:
-    lines[i][5] = punkti[key][7][0]
+    lines[i][2] = punkti[key][7][0]
     i += 1
 writer = csv.writer(open('hello.csv', 'w', newline=''))
 writer.writerows(lines)
