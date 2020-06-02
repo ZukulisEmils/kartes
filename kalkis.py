@@ -53,6 +53,7 @@ while i <= 10000:
     x += 1
 
 
+i = 1
 while i <= len(punkti) + 1:
 
     for key in punkti:
@@ -104,7 +105,6 @@ while run:
     pygame.display.update()
 
 # saglabaa
-
 r = csv.reader(open('hello.csv'))
 lines = list(r)
 i = 1
