@@ -115,4 +115,3 @@ def LKSToLatLon(x, y) :
     return [rad2deg(lat), rad2deg(lon)]
 
 
-print(LKSToLatLon(326175.2603054996,273755.30374360824))
