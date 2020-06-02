@@ -1,13 +1,8 @@
 import pygame
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
-from openpyxl import load_workbook
-import xlsxwriter
+import csv
 pygame.init()
-
-
-wb2 = load_workbook('hello.xlsx')
-ws = wb2.active
 
 
 WinWidth = 1000
@@ -68,29 +63,30 @@ while k<=10000:
         punkti[key] =[[x*10],[y],[0],[0],[0],[0],[0],[0],[0]]
     k += 1
     x +=1
-workbook = xlsxwriter.Workbook('hello.xlsx')
-worksheet = workbook.add_worksheet()
+
 q = 1
 while q<= len(punkti)+1:
 
     for key in punkti:
-        c = ws['A'+str(q)]
+        with open('hello.csv', 'r') as csvfile:
+            reader = csv.reader(csvfile, skipinitialspace=True)
+            next(reader)
+            for row in reader:
+                if int(row[0]) == key:
+                    raza = float(row[5])
+                    pH = float(row[4])
+                    kalkis = float(row[6])
+                    punkti[key][7][0] = raza
+                    value2 = raza
+                    value2 = (value2/6) * 100
 
-        if c.value == key:
-            raza = ws['F'+str(q)]
-            pH = ws['E'+str(q)]
-            kalkis = ws['G'+str(q)]
-            punkti[key][7][0] = raza.value
-            value2 = raza.value
-            value2 = (value2/6) * 100
-
-            punkti[key][6][0] = pH.value
-            punkti[key][7][0] = raza.value
-            punkti[key][8][0] = (punkti[key][6][0]* punkti[key][7][0])+30
-            maxK = punkti[key][8][0]
-            minK = punkti[key][8][0]
-            print(q)
-    q+=1
+                    punkti[key][6][0] = pH
+                    punkti[key][7][0] = raza
+                    punkti[key][8][0] = (punkti[key][6][0]* punkti[key][7][0])+30
+                    maxK = punkti[key][8][0]
+                    minK = punkti[key][8][0]
+                    print(q)
+            q+=1
 value = 3.5
 
 for key in punkti:
@@ -189,29 +185,16 @@ while run:
     pygame.display.update()
 
 
-worksheet.write(0,0,'ID')
-worksheet.write(0,1,'RED')
-worksheet.write(0,2,'GREEN')
-worksheet.write(0,3,'BLUE')
-worksheet.write(0,4,'pH')
-worksheet.write(0,5,'Raža')
-worksheet.write(0,6,'Kaļķis')
+# saglabaa
 
-f = 0
+r = csv.reader(open('hello.csv'))
+lines = list(r)
+i =1
 for key in punkti:
-        print(f)
-        print(key)
-        worksheet.write(f + 1, 0, key)
-        worksheet.write(f + 1, 1, punkti[key][2][0])
-        worksheet.write(f + 1, 2, punkti[key][3][0])
-        worksheet.write(f + 1, 3, punkti[key][4][0])
-        worksheet.write(f + 1, 4, punkti[key][6][0])
-        worksheet.write(f + 1, 5, punkti[key][7][0])
-        worksheet.write(f + 1, 6, punkti[key][8][0])
-        f += 1
-
-
-workbook.close()
+    lines[i][6] = punkti[key][8][0]
+    i += 1
+writer = csv.writer(open('hello.csv', 'w',newline=''))
+writer.writerows(lines)
 
 
 pygame.quit()

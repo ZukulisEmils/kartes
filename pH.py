@@ -1,13 +1,9 @@
 import pygame
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
-from openpyxl import load_workbook
-import xlsxwriter
+import csv
 pygame.init()
 
-
-wb2 = load_workbook('hello.xlsx')
-ws = wb2.active
 
 WinWidth = 1000
 WinHeight = 1000
@@ -63,67 +59,72 @@ while i <= 10000:
     i += 1
     x +=1
 
-workbook = xlsxwriter.Workbook('hello.xlsx')
-worksheet = workbook.add_worksheet()
+
+
 
 # ielade punktus no excel
 i = 1
 while i <= len(punkti)+1:
     for key in punkti:
-        c = ws['A'+str(i)]
-        if c.value == key:
-            pH = ws['E'+str(i)]
-            raza = ws['F'+str(i)]
-            punkti[key][6][0] = pH.value
-            value2 = pH.value
-            value2 = ((value2 - 3.5) / 3.3) * 100
-            if value2 == 0:
-                punkti[key][2][0] = 255
-                punkti[key][3][0] = 0
-                punkti[key][4][0] = 0
-                punkti[key][7][0] = raza.value
-            elif 0 < value2 < 50:
-                punkti[key][2][0] = 255
-                punkti[key][3][0] = int(value2 * 5.1)
-                punkti[key][4][0] = 0
-                punkti[key][7][0] = raza.value
-            elif value2 == 50:
-                punkti[key][2][0] = 255
-                punkti[key][3][0] = 255
-                punkti[key][4][0] = 0
-                punkti[key][7][0] = raza.value
-            elif 50 < value2 < 100:
-                punkti[key][2][0] = int((100 - value2) * 5.1)
-                punkti[key][3][0] = 255
-                punkti[key][4][0] = 0
-                punkti[key][7][0] = raza.value
-            elif value2 == 100:
-                punkti[key][2][0] = 0
-                punkti[key][3][0] = 255
-                punkti[key][4][0] = 0
-                punkti[key][7][0] = raza.value
-            elif 100 < value2 < 150:
-                punkti[key][2][0] = 0
-                punkti[key][3][0] = 255
-                punkti[key][4][0] = int((value2 - 100) * 5.1)
-                punkti[key][7][0] = raza.value
-            elif value2 == 150:
-                punkti[key][2][0] = 0
-                punkti[key][3][0] = 255
-                punkti[key][4][0] = 255
-                punkti[key][7][0] = raza.value
-            elif 150 < value2 < 200:
-                punkti[key][2][0] = 0
-                punkti[key][3][0] = int((200 - value2) * 5.1)
-                punkti[key][4][0] = 255
-                punkti[key][7][0] = raza.value
-            elif value2 == 200:
-                punkti[key][2][0] = 0
-                punkti[key][3][0] = 0
-                punkti[key][4][0] = 255
-                punkti[key][7][0] = raza.value
-            print(i)
-    i += 1
+        with open('hello.csv', 'r') as csvfile:
+            reader = csv.reader(csvfile, skipinitialspace=True)
+            next(reader)
+            for row in reader:
+                if int(row[0]) == key:
+                    pH = float(row[4])
+                    print(pH)
+                    raza = float(row[5])
+                    print(raza)
+                    punkti[key][6][0] = pH
+                    value2 = pH
+                    value2 = ((value2 - 3.5) / 3.3) * 100
+                    if value2 == 0:
+                        punkti[key][2][0] = 255
+                        punkti[key][3][0] = 0
+                        punkti[key][4][0] = 0
+                        punkti[key][7][0] = raza
+                    elif 0 < value2 < 50:
+                        punkti[key][2][0] = 255
+                        punkti[key][3][0] = int(value2 * 5.1)
+                        punkti[key][4][0] = 0
+                        punkti[key][7][0] = raza
+                    elif value2 == 50:
+                        punkti[key][2][0] = 255
+                        punkti[key][3][0] = 255
+                        punkti[key][4][0] = 0
+                        punkti[key][7][0] = raza
+                    elif 50 < value2 < 100:
+                        punkti[key][2][0] = int((100 - value2) * 5.1)
+                        punkti[key][3][0] = 255
+                        punkti[key][4][0] = 0
+                        punkti[key][7][0] = raza
+                    elif value2 == 100:
+                        punkti[key][2][0] = 0
+                        punkti[key][3][0] = 255
+                        punkti[key][4][0] = 0
+                        punkti[key][7][0] = raza
+                    elif 100 < value2 < 150:
+                        punkti[key][2][0] = 0
+                        punkti[key][3][0] = 255
+                        punkti[key][4][0] = int((value2 - 100) * 5.1)
+                        punkti[key][7][0] = raza
+                    elif value2 == 150:
+                        punkti[key][2][0] = 0
+                        punkti[key][3][0] = 255
+                        punkti[key][4][0] = 255
+                        punkti[key][7][0] = raza
+                    elif 150 < value2 < 200:
+                        punkti[key][2][0] = 0
+                        punkti[key][3][0] = int((200 - value2) * 5.1)
+                        punkti[key][4][0] = 255
+                        punkti[key][7][0] = raza
+                    elif value2 == 200:
+                        punkti[key][2][0] = 0
+                        punkti[key][3][0] = 0
+                        punkti[key][4][0] = 255
+                        punkti[key][7][0] = raza
+                    print(i)
+            i += 1
 
 value = 3.5
 
@@ -138,7 +139,7 @@ while run:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_r:
                 color = 2
-                print (color)
+                print(color)
             if event.key == pygame.K_g:
                 color = 3
                 print(color)
@@ -254,34 +255,23 @@ while run:
     # lauka kontura
     i = 0
     while i < len(cord)-1:
-        pygame.draw.line(win, (255, 255, 255), (cord[i][0], cord[i][1]), (cord[i+1][0], cord[i+1][1]))
+        pygame.draw.line(win, (255, 255, 255), (cord[i][0]+5, cord[i][1]+5), (cord[i+1][0]+5, cord[i+1][1]+5))
         i += 1
 
     pygame.display.update()
 
 
-worksheet.write(0,0,'ID')
-worksheet.write(0,1,'RED')
-worksheet.write(0,2,'GREEN')
-worksheet.write(0,3,'BLUE')
-worksheet.write(0,4,'pH')
-worksheet.write(0,5,'Raža')
-
 
 # saglabaa
-f = 0
+
+r = csv.reader(open('hello.csv'))
+lines = list(r)
+i =1
 for key in punkti:
-        print(f)
-        print(key)
-        worksheet.write(f + 1, 0, key)
-        worksheet.write(f + 1, 1, punkti[key][2][0])
-        worksheet.write(f + 1, 2, punkti[key][3][0])
-        worksheet.write(f + 1, 3, punkti[key][4][0])
-        worksheet.write(f + 1, 4, punkti[key][6][0])
-        worksheet.write(f + 1, 5, punkti[key][7][0])
-        f += 1
-
-workbook.close()
-
+    print(punkti[key][6][0],'pH')
+    lines[i][4] = punkti[key][6][0]
+    i += 1
+writer = csv.writer(open('hello.csv', 'w',newline=''))
+writer.writerows(lines)
 pygame.quit()
 
