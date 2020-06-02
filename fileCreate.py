@@ -52,7 +52,7 @@ for key in punkti:
     punkti[key][9] = LKSToLatLon(punkti[key][9][0], punkti[key][10][0])
     punkti[key][11][0] = punkti[key][0][0] + minx - 200 + 10
     punkti[key][12][0] = punkti[key][1][0] + miny + 1200 + 10
-    punkti[key][11] = LKSToLatLon(punkti[key][9][0], punkti[key][10][0])
+    punkti[key][11] = LKSToLatLon(punkti[key][11][0], punkti[key][12][0])
 
 i = 1
 
