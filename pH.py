@@ -12,10 +12,9 @@ pygame.display.set_caption('pH')
 
 run = True
 
-color = 2
-showr = 5
-showg = 5
-showb = 5
+showr = 2
+showg = 3
+showb = 4
 y = 0
 cord = getCords.cords
 
@@ -68,9 +67,7 @@ while i <= len(punkti) + 1:
             for row in reader:
                 if int(row[0]) == key:
                     pH = float(row[4])
-                    print(pH)
                     raza = float(row[5])
-                    print(raza)
                     punkti[key][6][0] = pH
                     value2 = pH
                     value2 = ((value2 - 3.5) / 3.3) * 100
@@ -119,7 +116,6 @@ while i <= len(punkti) + 1:
                         punkti[key][3][0] = 0
                         punkti[key][4][0] = 255
                         punkti[key][7][0] = raza
-                    print(i)
             i += 1
 
 value = 3.5
@@ -133,46 +129,30 @@ while run:
         move_ticker = 0
         keys = pygame.key.get_pressed()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_r:
-                color = 2
-                print(color)
-            if event.key == pygame.K_g:
-                color = 3
-                print(color)
-
-            if event.key == pygame.K_b:
-                color = 4
-                print(color)
             if event.key == pygame.K_KP_MINUS:
                 value -= 0.1
-                print(value)
+                print('pH',value)
             if event.key == pygame.K_KP_PLUS:
                 value += 0.1
-                print(value)
+                print('pH',value)
             if event.key == pygame.K_KP1:
                 showr = 2
                 print('RED on')
-                print(showr)
             if event.key == pygame.K_KP2:
                 showg = 3
                 print('GREEN on')
-                print(showg)
             if event.key == pygame.K_KP3:
                 showb = 4
                 print('BLUE on')
-                print(showb)
             if event.key == pygame.K_KP4:
                 showr = 5
                 print('RED off')
-                print(showr)
             if event.key == pygame.K_KP5:
                 showg = 5
                 print('GREEN off')
-                print(showg)
             if event.key == pygame.K_KP6:
                 showb = 5
                 print('BLUE off')
-                print(showb)
 
         # atrod id no koordinaatem
         if pygame.mouse.get_pressed()[0]:
@@ -188,7 +168,6 @@ while run:
 
                 # nosaka krasu no vertibas
                 if id in punkti:
-                    print('in')
                     value2 = ((value - 3.5) / 3.3) * 100
                     if value2 == 0:
                         punkti[id][2][0] = 255
@@ -235,10 +214,6 @@ while run:
                         punkti[id][3][0] = 0
                         punkti[id][4][0] = 255
                         punkti[id][6][0] = value
-
-                else:
-                    print('Out')
-
             except AttributeError:
                 pass
 
@@ -262,7 +237,6 @@ r = csv.reader(open('hello.csv'))
 lines = list(r)
 i = 1
 for key in punkti:
-    print(punkti[key][6][0], 'pH')
     lines[i][4] = punkti[key][6][0]
     i += 1
 writer = csv.writer(open('hello.csv', 'w', newline=''))
