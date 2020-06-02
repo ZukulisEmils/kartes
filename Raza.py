@@ -13,7 +13,6 @@ pygame.display.set_caption('Raza')
 run = True
 
 
-
 showr = 2
 showg = 3
 showb = 4
@@ -222,7 +221,7 @@ while run:
                          (punkti[key][0][0], punkti[key][1][0], 10, 10))
     i = 0
     while i < len(cord) - 1:
-        pygame.draw.line(win, (255, 255, 255), (cord[i][0], cord[i][1]), (cord[i + 1][0], cord[i + 1][1]))
+        pygame.draw.line(win, (255, 255, 255), (cord[i][0]+5, cord[i][1]+5), (cord[i + 1][0]+5, cord[i + 1][1]+5))
         i += 1
 
     pygame.display.update()
