@@ -2,7 +2,6 @@ import pygame
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 import csv
-from koordinates import LKSToLatLon
 import getCords
 
 pygame.init()
@@ -53,12 +52,7 @@ while i <= 10000:
     i += 1
     x += 1
 
-for key in punkti:
-    punkti[key][9][0] = punkti[key][0][0] + minx - 200
-    punkti[key][10][0] = punkti[key][1][0] + miny +1200
-    punkti[key][9] = LKSToLatLon(punkti[key][9][0], punkti[key][10][0])
 
-i = 1
 while i <= len(punkti) + 1:
 
     for key in punkti:
@@ -116,8 +110,6 @@ lines = list(r)
 i = 1
 for key in punkti:
     lines[i][6] = punkti[key][8][0]
-    lines[i][7] = punkti[key][9][0]
-    lines[i][8] = punkti[key][9][1]
     i += 1
 writer = csv.writer(open('hello.csv', 'w', newline=''))
 writer.writerows(lines)
