@@ -62,7 +62,7 @@ while i <= 10000:
 
 
 
-# ielade punktus no excel
+# ielade punktus no csv
 i = 1
 while i <= len(punkti)+1:
     for key in punkti:
